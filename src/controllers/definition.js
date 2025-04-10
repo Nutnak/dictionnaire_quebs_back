@@ -17,9 +17,9 @@ const getAllDefinitions = async (req, res) => {
 
 const createDefinition = async (req, res) => {
     try {
-        const { name, expression, exemple, pseudonyme } = req.body;
+        const { name, explication, exemple, pseudonyme } = req.body;
 
-        if (!name || !expression || !exemple || !pseudonyme) {
+        if (!name || !explication || !exemple || !pseudonyme) {
             return res.status(400).json({message: "All fields are required"});
         }
 
@@ -31,7 +31,7 @@ const createDefinition = async (req, res) => {
 
         const newDefinition =  new definition({
             name,
-            expression,
+            explication,
             exemple,
             pseudonyme
         });
@@ -61,8 +61,27 @@ const getDefinitionById = async (req, res) => {
     };
 };
 
+const getDefinitionByName = async (req, res) => {
+    try {
+        const term = req.query.term;
+
+        const regex = new RegExp(term, 'i'); 
+    
+        const searchDefinition = await definition.find({name: {$regex: regex}});
+
+        if(!searchDefinition) {
+            res.status(404).json({message: "Definition not found."});
+        };
+
+        res.status(200).json(searchDefinition);
+    } catch (error) {
+        res.status(500).json({message: "Error fetching definition", error});
+    };
+}
+
 module.exports = {
     createDefinition,
     getAllDefinitions,
-    getDefinitionById
+    getDefinitionById,
+    getDefinitionByName
 };
