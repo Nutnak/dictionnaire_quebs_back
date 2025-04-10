@@ -2,10 +2,12 @@ const definition = require('../models/definition');
 
 const getAllDefinitions = async (req, res) => {
     try {
-        const definitions = await definition.findOne();
+        const definitions = await definition.find();
+
         if (!definitions) {
             return res.status(404).json({message: "No definitions found"});
         }
+        
         res.status(200).json(definitions);
     } catch (error) {
         console.log(error);
