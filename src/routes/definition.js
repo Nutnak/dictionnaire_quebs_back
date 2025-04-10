@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.get('/', definitionCtrl.getAllDefinitions);
 router.post('/', definitionCtrl.createDefinition);
+router.get('/search', definitionCtrl.getDefinitionByName);
 router.get('/:id', definitionCtrl.getDefinitionById);
 
 module.exports = router;

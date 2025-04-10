@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 const schema = new Schema({
     name: String,
-    definition: String,
+    explication: String,
     exemple: String,
     pseudonyme: String,
     isvisible: {
